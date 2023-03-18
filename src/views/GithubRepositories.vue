@@ -174,6 +174,14 @@
     grid-template-columns: repeat(2, 1fr);
     gap: 1rem;
   }
+  
+  }
+
+  @media screen and (max-width:450px) {
+    .repos-ul {
+    grid-template-columns: repeat(1, 1fr);
+    gap: 1rem;
+  }
   }
 
   </style>
