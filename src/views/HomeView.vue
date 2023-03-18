@@ -137,12 +137,24 @@ button:hover {
     height: 550px;
   }
 
+  #dp{
+    height: 200px;
+    width: 200px;
+  }
+
   #info-card {
     height: 200px;
   }
 
   #stats-card {
     height: 200px;
+  }
+}
+
+@media screen and (max-width:450px) {
+  #dp {
+    width: 150px;
+    height: 150px;
   }
 }
 </style>
