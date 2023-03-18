@@ -8,8 +8,8 @@
 
 <style>
 * {
-  margin: 0;
-  padding: 0;
+  /* margin: 0;
+  padding: 0; */
 }
 
 #app {
@@ -17,9 +17,9 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #eaebec;
-  padding: 0.5rem;
-  background: #2f3030;
+  color: #2c3e50;
+  /* padding: 0.5rem; */
+  /* background: #2f3030; */
   height: 100vh;
 }
 
@@ -30,6 +30,7 @@ nav {
 nav a {
   font-weight: bold;
   color: #2c3e50;
+  text-decoration: none;
 }
 
 nav a.router-link-exact-active {

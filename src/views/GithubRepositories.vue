@@ -1,10 +1,10 @@
 <template>
-    <div>
+    <div style="display: flex; flex-direction: column; justify-content: center; align-items: center;">
       <h2>List of Lancevd's Github Repositories</h2>
       <ul class="repos-ul">
         <li v-for="repo in displayedRepositories" :key="repo.id" class="repo-list">
           <router-link :to="{ name: 'repository', params: { name: repo.name } }">{{ repo.name }}</router-link>
-          <p v-if="repo.description" class="repo-desc">{{ repo.description }} {{ repo.description.length }}</p>
+          <p v-if="repo.description" class="repo-desc">{{ repo.description ? repo.description.slice(0,30) + '...' : repo.description }}</p>
           <p v-else>No description</p>
           <!-- <p v-if="repo.description.length > 30"> Too long </p> -->
           <div id="lang">
@@ -17,9 +17,10 @@
             <!-- </div> -->
             <p>{{ repo.language }}</p>
           </div>
+          <p><i>Last updated {{ new Date(repo.updated_at).toLocaleDateString('en-us',) }}</i></p>
         </li>
       </ul>
-      <nav v-if="pages.length > 1">
+      <nav id="pag-nav" v-if="pages.length > 1">
         <ul class="pagination">
           <li class="page-item" :class="{ disabled: currentPage === 1 }">
             <a class="page-link" @click.prevent="goToPage(currentPage - 1)">Previous</a>
@@ -37,6 +38,7 @@
   </template>
   
   <script>
+
   export default {
     name: 'GithubRepositories',
     data() {
@@ -69,7 +71,7 @@
     methods: {
       fetchRepositories() {
         const username = 'lancevd';
-        const url = `https://api.github.com/users/${username}/repos`;
+        const url = `https://api.github.com/users/${username}/repos?sort=updated`;
   
         fetch(url)
           .then(response => response.json())
@@ -91,7 +93,12 @@
   .repos-ul {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
+    justify-content: space-between;
+    align-items: center;
     gap: 1rem;
+    padding: 0.2rem 0.5rem;
+    /* width: 100%; */
+    margin: auto;
   }
 
   li {
@@ -104,6 +111,9 @@
     padding: 0.5rem 0.8rem;
     box-shadow: 0px 0px 3px rgba(60, 59, 59, 0.685);
     text-align: left;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
   .repo-list a {
@@ -128,7 +138,9 @@
     justify-content: center;
     align-items: center;
   }
-
+  #pag-nav{
+    width: 90vw;
+  }
   .pagination {
     display: flex;
     justify-content: center;
@@ -153,6 +165,15 @@
 
   .page-link {
     width: 100%;
+  }
+
+  /* Resoponsiveness */
+
+  @media screen and (max-width:768px) {
+    .repos-ul {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+  }
   }
 
   </style>
