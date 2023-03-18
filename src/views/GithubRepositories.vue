@@ -1,11 +1,22 @@
 <template>
     <div>
       <h2>List of Lancevd's Github Repositories</h2>
-      <ul>
+      <ul class="repos-ul">
         <li v-for="repo in displayedRepositories" :key="repo.id" class="repo-list">
           <router-link :to="{ name: 'repository', params: { name: repo.name } }">{{ repo.name }}</router-link>
-          <p>{{ repo.description }}</p>
-          <p>{{ repo.language }}</p>
+          <p v-if="repo.description" class="repo-desc">{{ repo.description }} {{ repo.description.length }}</p>
+          <p v-else>No description</p>
+          <!-- <p v-if="repo.description.length > 30"> Too long </p> -->
+          <div id="lang">
+            <!-- <div id="lang-logo"> -->
+              <img v-if="repo.language == 'HTML'" src="../assets/html.png" class="lang-logo" >
+              <img v-else-if="repo.language == 'CSS'" src="../assets/css.png" class="lang-logo" >
+              <img v-else-if="repo.language === 'JavaScript'" src="../assets/javascript.png" class="lang-logo" >
+              <img v-else-if="repo.language === 'Vue'" src="../assets/logo.png" class="lang-logo" >
+              <!-- <img class="lang-logo" src="../assets/html.png" > -->
+            <!-- </div> -->
+            <p>{{ repo.language }}</p>
+          </div>
         </li>
       </ul>
       <nav v-if="pages.length > 1">
@@ -32,7 +43,7 @@
       return {
         repositories: [],
         currentPage: 1,
-        itemsPerPage: 10
+        itemsPerPage: 12
       };
     },
     computed: {
@@ -77,7 +88,7 @@
   </script>
   
   <style>
-  ul {
+  .repos-ul {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     gap: 1rem;
@@ -88,7 +99,60 @@
   }
 
   .repo-list{
-    
+    /* border: solid gray 2px; */
+    border-radius: 10px;
+    padding: 0.5rem 0.8rem;
+    box-shadow: 0px 0px 3px rgba(60, 59, 59, 0.685);
+    text-align: left;
+  }
+
+  .repo-list a {
+    text-decoration: none;
+    color: #42b983;
+  }
+
+  #lang {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+    justify-content: start;
+  }
+
+  .lang-logo {
+    height: 50px;
+    width: 50px;
+    border-radius: 50%;
+    /* overflow: hidden; */
+    /* border: red solid; */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+  }
+
+  .page-item {
+    width: 150px;
+    background-color: #42b983;
+    cursor: pointer;
+    border-radius: 5px;
+    height: 45px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .page-item:hover {
+    padding: 5px;
+  }
+
+  .page-link {
+    width: 100%;
   }
 
   </style>
